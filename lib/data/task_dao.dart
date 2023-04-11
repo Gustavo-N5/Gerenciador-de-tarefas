@@ -1,7 +1,7 @@
 import 'package:sqflite/sqflite.dart';
 
-import '../Components/task.dart';
-import 'databasse.dart';
+import '../components/task.dart';
+import 'database.dart';
 
 class TaskDao {
   static const String tableSql = 'CREATE TABLE $_tablename('
@@ -57,9 +57,9 @@ class TaskDao {
     final List<Task> tarefas = [];
     for (Map<String, dynamic> linha in mapaDeTarefas) {
       final Task tarefa = Task(
-        nome: linha[_name],
-        foto: linha[_image],
-        dificuldade: linha[_difficulty],
+        linha[_name],
+        linha[_image],
+        linha[_difficulty],
       );
       tarefas.add(tarefa);
     }

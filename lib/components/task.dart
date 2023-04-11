@@ -1,34 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_alura/Components/star.dart';
+
+import 'difficulty.dart';
 
 class Task extends StatefulWidget {
   final String nome;
   final String foto;
   final int dificuldade;
-  Task({
-    super.key,
-    required this.nome,
-    required this.foto,
-    required this.dificuldade,
-  });
-  int _nivel = 0;
+  int nivel;
+  Task(
+    this.nome,
+    this.foto,
+    this.dificuldade, [
+    this.nivel = 0,
+    Key? key,
+  ]) : super(key: key);
 
   @override
   State<Task> createState() => _TaskState();
 }
 
 class _TaskState extends State<Task> {
-  bool assetsOrNetwork() {
+  bool assetOrNetwork() {
     if (widget.foto.contains('http')) {
       return false;
     }
     return true;
-  }
-
-  void _aumentaNivel() {
-    setState(() {
-      widget._nivel++;
-    });
   }
 
   @override
@@ -39,9 +35,7 @@ class _TaskState extends State<Task> {
         children: [
           Container(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(4),
-              color: Colors.blue,
-            ),
+                borderRadius: BorderRadius.circular(4), color: Colors.blue),
             height: 140,
           ),
           Column(
@@ -60,11 +54,11 @@ class _TaskState extends State<Task> {
                         borderRadius: BorderRadius.circular(4),
                         color: Colors.black26,
                       ),
-                      height: 100,
                       width: 72,
+                      height: 100,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(4),
-                        child: assetsOrNetwork()
+                        child: assetOrNetwork()
                             ? Image.asset(
                                 widget.foto,
                                 fit: BoxFit.cover,
@@ -80,34 +74,42 @@ class _TaskState extends State<Task> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(
-                          width: 200,
-                          child: Text(
-                            widget.nome,
-                            style: const TextStyle(fontSize: 20),
-                            overflow: TextOverflow.ellipsis,
-                          ),
+                            width: 200,
+                            child: Text(
+                              widget.nome,
+                              style: const TextStyle(
+                                fontSize: 24,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            )),
+                        Difficulty(
+                          dificultyLevel: widget.dificuldade,
                         ),
-                        Star(dificulty: widget.dificuldade),
                       ],
                     ),
                     SizedBox(
                       height: 52,
                       width: 52,
                       child: ElevatedButton(
-                        onPressed: () => _aumentaNivel(),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: const [
-                            Icon(Icons.arrow_drop_up),
-                            Text(
-                              'UP',
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                          onPressed: () {
+                            print(widget.nivel);
+                            setState(() {
+                              widget.nivel++;
+                            });
+                            // print(nivel);
+                          },
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: const [
+                              Icon(Icons.arrow_drop_up),
+                              Text(
+                                'UP',
+                                style: TextStyle(fontSize: 12),
+                              )
+                            ],
+                          )),
+                    )
                   ],
                 ),
               ),
@@ -115,26 +117,24 @@ class _TaskState extends State<Task> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8),
                     child: SizedBox(
-                      width: 200,
                       child: LinearProgressIndicator(
                         color: Colors.white,
                         value: (widget.dificuldade > 0)
-                            ? (widget._nivel / widget.dificuldade) / 10
+                            ? (widget.nivel / widget.dificuldade) / 10
                             : 1,
                       ),
+                      width: 200,
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(12),
                     child: Text(
-                      'Nivel: ${widget._nivel}',
-                      style: const TextStyle(
-                        color: Colors.white,
-                      ),
+                      'Nivel: ${widget.nivel}',
+                      style: const TextStyle(color: Colors.white, fontSize: 16),
                     ),
-                  ),
+                  )
                 ],
               ),
             ],

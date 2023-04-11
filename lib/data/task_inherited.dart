@@ -1,27 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_alura/Components/task.dart';
+
+import '../components/task.dart';
 
 class TaskInherited extends InheritedWidget {
-  TaskInherited({super.key, required this.child}) : super(child: child);
+  TaskInherited({
+    Key? key,
+    required Widget child,
+  }) : super(key: key, child: child);
 
-  final Widget child;
   final List<Task> taskList = [
-    Task(
-        nome: 'Aprender Flutter',
-        foto: 'assets/images/dash.png',
-        dificuldade: 2),
-    Task(
-        nome: 'Andar de Bike', foto: 'assets/images/bike.webp', dificuldade: 3),
-    Task(nome: 'Meditar', foto: 'assets/images/meditar.jpeg', dificuldade: 4),
-    Task(nome: 'Ler', foto: 'assets/images/livro.jpg', dificuldade: 5),
-    Task(nome: 'Jogar', foto: 'assets/images/jogar.jpg', dificuldade: 1),
+    Task('Aprender Flutter', 'assets/images/dash.png', 3),
+    Task('Andar de Bike', 'assets/images/bike.webp', 2),
+    Task('Meditar', 'assets/images/meditar.jpeg', 5),
+    Task('Ler', 'assets/images/livro.jpg', 4),
+    Task('Jogar', 'assets/images/jogar.jpg', 1),
   ];
-  void newTask(String name, String foto, int dificulty) {
-    taskList.add(Task(nome: name, foto: foto, dificuldade: dificulty));
+
+  void newTask(String name, String photo, int difficulty) {
+    taskList.add(Task(name, photo, difficulty));
   }
 
-  static TaskInherited? of(BuildContext context) {
-    return context.dependOnInheritedWidgetOfExactType<TaskInherited>();
+  static TaskInherited of(BuildContext context) {
+    final TaskInherited? result =
+        context.dependOnInheritedWidgetOfExactType<TaskInherited>();
+    assert(result != null, 'No TaskInherited found in context');
+    return result!;
   }
 
   @override

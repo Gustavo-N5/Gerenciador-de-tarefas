@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_alura/data/task_inherited.dart';
-
-// import 'package:projeto_alura/pages/forms_screen.dart';
-import 'package:projeto_alura/pages/initial_screen.dart';
+import 'package:projeto_alura/screens/initial_screen.dart';
 
 void main() {
   runApp(const MyApp());
